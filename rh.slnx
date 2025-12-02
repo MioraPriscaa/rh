@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="rh.BackOffice/rh.BackOffice.csproj" />
+  <Project Path="rh.Domain/rh.Domain.csproj" />
+  <Project Path="rh.FrontOffice.Web/rh.FrontOffice.Web.csproj" />
+  <Project Path="rh.Infrastructure/rh.Infrastructure.csproj" />
+</Solution>

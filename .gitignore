@@ -1,0 +1,32 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.tmp
+*.log
+*.userosscache
+*.sln.docstates
+
+# Build
+bin/
+obj/
+out/
+
+# ASP.NET / .NET
+*.dbmdl
+*.pdb
+*.dll
+*.exe
+*.cache
+*.config
+*.ide
+
+# Rider / VSCode
+.idea/
+*.code-workspace
+
+# Node/npm (si utilisé)
+node_modules/
+
+# Secrets
+appsettings.Development.json
