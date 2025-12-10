@@ -1,0 +1,31 @@
+@page
+@model rh.BackOffice.Pages_Annonces.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Annonce</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Annonce.nom)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Annonce.nom)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Annonce.date)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Annonce.date)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Annonce.id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

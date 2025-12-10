@@ -22,7 +22,7 @@ namespace rh.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("rh.Domain.Entities.Annonces", b =>
+            modelBuilder.Entity("rh.Domain.Entities.Annonce", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()

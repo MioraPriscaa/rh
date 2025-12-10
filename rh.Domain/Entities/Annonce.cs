@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace rh.Domain.Entities
 {
-    public class Annonces
+    public class Annonce
     {
         public int id { get; set; }
 
