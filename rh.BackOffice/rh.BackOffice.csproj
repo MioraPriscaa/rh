@@ -1,5 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
+  <ItemGroup>
+    <Content Remove="wwwroot\Index.cshtml.cs" />
+  </ItemGroup>
+
+ 
   <ItemGroup>
     <ProjectReference Include="..\rh.Infrastructure\rh.Infrastructure.csproj" />
     <ProjectReference Include="..\rh.Domain\rh.Domain.csproj" />
@@ -17,6 +22,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.0.1" />
   </ItemGroup>
 
   <PropertyGroup>
