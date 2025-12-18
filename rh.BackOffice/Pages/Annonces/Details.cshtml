@@ -42,6 +42,18 @@
             @Html.DisplayFor(model => model.Annonce.ModeTravail.Libelle)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Annonce.Duree)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Annonce.Duree)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Annonce.NbDossierValide)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Annonce.NbDossierValide)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Annonce.NiveauExperience)
         </dt>
         <dd class="col-sm-10">
@@ -61,6 +73,39 @@
         </dd>
     </dl>
 </div>
+
+<h4>Candidats ayant postulé</h4>
+
+@if (Model.Candidats.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+                <th>Statut</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var candidat in Model.Candidats)
+            {
+                <tr>
+                    <td>@candidat.Nom</td>
+                    <td>@candidat.Prenom</td>
+                    <td>@candidat.Email</td>
+                    <td>@Model.Annonce.Candidatures.First(c => c.IdCandidat == candidat.Id).Statut.Libelle</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Aucun candidat n'a postulé pour cette annonce.</p>
+}
+
+
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Annonce.Id">Edit</a> |
     <a asp-page="./Index">Back to List</a>

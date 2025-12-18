@@ -20,23 +20,27 @@ namespace rh.BackOffice.Pages_Annonces
         }
 
         public Annonce Annonce { get; set; } = default!;
-
+        // Liste des candidats qui ont postulé
+        public List<Candidat> Candidats { get; set; } = new List<Candidat>();
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             Annonce = await _context.Annonces
                 .Include(a => a.TypeContrat)
-                .Include(a => a.ModeTravail)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            .Include(a => a.ModeTravail)
+     .Include(a => a.Candidatures)
+         .ThenInclude(c => c.Candidat)
+     .Include(a => a.Candidatures)
+         .ThenInclude(c => c.Statut) 
+     .FirstOrDefaultAsync(m => m.Id == id);
 
             if (Annonce == null)
-            {
                 return NotFound();
-            }
+
+            Candidats = Annonce.Candidatures?.Select(c => c.Candidat).ToList() ?? new List<Candidat>();
+
 
             return Page();
         }

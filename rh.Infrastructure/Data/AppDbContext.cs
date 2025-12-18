@@ -29,6 +29,26 @@ namespace rh.Infrastructure.Data
                 .HasOne(a => a.ModeTravail)
                 .WithMany(m => m.Annonces)
                 .HasForeignKey(a => a.IdModeTravail);
+
+            modelBuilder.Entity<Candidature>()
+               .HasOne(c => c.Candidat)
+               .WithMany(c => c.Candidatures)
+               .HasForeignKey(c => c.IdCandidat);
+
+            modelBuilder.Entity<Candidature>()
+                .HasOne(c => c.Annonce)
+                .WithMany(a => a.Candidatures)
+                .HasForeignKey(c => c.IdAnnonce);
+
+            modelBuilder.Entity<Candidature>()
+                .HasOne(c => c.Statut)
+                .WithMany(s => s.Candidatures)
+                .HasForeignKey(c => c.IdStatut);
+
+            modelBuilder.Entity<Annonce>()
+                .Property(a => a.NbDossierValide)
+                .HasDefaultValue(0);
+
         }
 
     }

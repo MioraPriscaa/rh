@@ -37,6 +37,11 @@
                 <select asp-for="Annonce.IdModeTravail" class ="form-control" asp-items="ViewBag.IdModeTravail"></select>
             </div>
             <div class="form-group">
+                <label asp-for="Annonce.Duree" class="control-label"></label>
+                <input asp-for="Annonce.Duree" class="form-control" />
+                <span asp-validation-for="Annonce.Duree" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Annonce.NiveauExperience" class="control-label"></label>
                 <input asp-for="Annonce.NiveauExperience" class="form-control" />
                 <span asp-validation-for="Annonce.NiveauExperience" class="text-danger"></span>
