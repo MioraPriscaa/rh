@@ -29,7 +29,7 @@ namespace rh.BackOffice.Pages_Annonces
                 return NotFound();
             }
 
-            var annonce = await _context.Annonces.FirstOrDefaultAsync(m => m.id == id);
+            var annonce = await _context.Annonces.FirstOrDefaultAsync(m => m.Id == id);
 
             if (annonce == null)
             {

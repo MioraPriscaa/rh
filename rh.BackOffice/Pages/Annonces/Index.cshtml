@@ -14,10 +14,28 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Annonce[0].nom)
+                @Html.DisplayNameFor(model => model.Annonce[0].Libelle)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Annonce[0].date)
+                @Html.DisplayNameFor(model => model.Annonce[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Annonce[0].CompetenceRequis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Annonce[0].TypeContrat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Annonce[0].ModeTravail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Annonce[0].NiveauExperience)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Annonce[0].Localisation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Annonce[0].DateFin)
             </th>
             <th></th>
         </tr>
@@ -26,15 +44,33 @@
 @foreach (var item in Model.Annonce) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.nom)
+                @Html.DisplayFor(modelItem => item.Libelle)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.date)
+                @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.id">Delete</a>
+                @Html.DisplayFor(modelItem => item.CompetenceRequis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeContrat.Libelle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModeTravail.Libelle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NiveauExperience)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Localisation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateFin)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

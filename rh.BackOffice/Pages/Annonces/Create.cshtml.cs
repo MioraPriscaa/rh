@@ -21,6 +21,8 @@ namespace rh.BackOffice.Pages_Annonces
 
         public IActionResult OnGet()
         {
+        ViewData["IdModeTravail"] = new SelectList(_context.ModeTravails, "Id", "Libelle");
+        ViewData["IdTypeContrat"] = new SelectList(_context.TypeContrats, "Id", "Libelle");
             return Page();
         }
 

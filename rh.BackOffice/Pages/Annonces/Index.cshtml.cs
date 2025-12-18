@@ -23,7 +23,9 @@ namespace rh.BackOffice.Pages_Annonces
 
         public async Task OnGetAsync()
         {
-            Annonce = await _context.Annonces.ToListAsync();
+            Annonce = await _context.Annonces
+                .Include(a => a.ModeTravail)
+                .Include(a => a.TypeContrat).ToListAsync();
         }
     }
 }

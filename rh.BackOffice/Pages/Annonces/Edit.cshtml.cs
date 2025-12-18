@@ -30,12 +30,14 @@ namespace rh.BackOffice.Pages_Annonces
                 return NotFound();
             }
 
-            var annonce =  await _context.Annonces.FirstOrDefaultAsync(m => m.id == id);
+            var annonce =  await _context.Annonces.FirstOrDefaultAsync(m => m.Id == id);
             if (annonce == null)
             {
                 return NotFound();
             }
             Annonce = annonce;
+           ViewData["IdModeTravail"] = new SelectList(_context.ModeTravails, "Id", "Libelle");
+           ViewData["IdTypeContrat"] = new SelectList(_context.TypeContrats, "Id", "Libelle");
             return Page();
         }
 
@@ -56,7 +58,7 @@ namespace rh.BackOffice.Pages_Annonces
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AnnonceExists(Annonce.id))
+                if (!AnnonceExists(Annonce.Id))
                 {
                     return NotFound();
                 }
@@ -71,7 +73,7 @@ namespace rh.BackOffice.Pages_Annonces
 
         private bool AnnonceExists(int id)
         {
-            return _context.Annonces.Any(e => e.id == id);
+            return _context.Annonces.Any(e => e.Id == id);
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using rh.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using rh.Infrastructure.Data;
 namespace rh.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251217080236_CreateModeTravail")]
+    partial class CreateModeTravail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,46 +27,30 @@ namespace rh.Infrastructure.Migrations
 
             modelBuilder.Entity("rh.Domain.Entities.Annonce", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<string>("CompetenceRequis")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("ModeTravailId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime?>("DateFin")
+                    b.Property<int?>("TypeContratId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("nom")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdModeTravail")
-                        .HasColumnType("int");
+                    b.HasKey("id");
 
-                    b.Property<int>("IdTypeContrat")
-                        .HasColumnType("int");
+                    b.HasIndex("ModeTravailId");
 
-                    b.Property<string>("Libelle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Localisation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NiveauExperience")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdModeTravail");
-
-                    b.HasIndex("IdTypeContrat");
+                    b.HasIndex("TypeContratId");
 
                     b.ToTable("Annonces");
                 });
@@ -104,21 +91,13 @@ namespace rh.Infrastructure.Migrations
 
             modelBuilder.Entity("rh.Domain.Entities.Annonce", b =>
                 {
-                    b.HasOne("rh.Domain.Entities.ModeTravail", "ModeTravail")
+                    b.HasOne("rh.Domain.Entities.ModeTravail", null)
                         .WithMany("Annonces")
-                        .HasForeignKey("IdModeTravail")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ModeTravailId");
 
-                    b.HasOne("rh.Domain.Entities.TypeContrat", "TypeContrat")
+                    b.HasOne("rh.Domain.Entities.TypeContrat", null)
                         .WithMany("Annonces")
-                        .HasForeignKey("IdTypeContrat")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ModeTravail");
-
-                    b.Navigation("TypeContrat");
+                        .HasForeignKey("TypeContratId");
                 });
 
             modelBuilder.Entity("rh.Domain.Entities.ModeTravail", b =>

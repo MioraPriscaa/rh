@@ -31,24 +31,22 @@
 		<partial name="Sections/Navbar/_Navbar" />
 		}
 
-		<div class="container-fluid">
-			<div class="row">
-				<!-- Menu si activé -->
-				@if (isMenu)
-				{
-				<div class="col-md-3 col-lg-2">
+		
+		<div class="row">
+			@if (isMenu)
+			{
+				<div class="col-md-3 col-lg-2 position-sticky" style="top:0;">
 					<partial name="Sections/Menu/_VerticalMenu" />
 				</div>
-				}
+			}
 
-				<!-- Contenu principal -->
-				<div class='@(isMenu ? "col-md-9 col-lg-10" : "col-12")'>
-					<main role="main" class="pb-3">
-						@RenderBody()
-					</main>
-				</div>
+			<div class="@(isMenu ? "col-md-9 col-lg-10" : "col-12")">
+				<main role="main text-center" class="pb-3 " style="margin-left: 50px">
+					@RenderBody()
+				</main>
 			</div>
 		</div>
+
 
 		<!-- Footer si activé -->
 		@if (isFooter)

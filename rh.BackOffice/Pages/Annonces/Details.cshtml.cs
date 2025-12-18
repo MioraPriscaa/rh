@@ -28,15 +28,16 @@ namespace rh.BackOffice.Pages_Annonces
                 return NotFound();
             }
 
-            var annonce = await _context.Annonces.FirstOrDefaultAsync(m => m.id == id);
-            if (annonce == null)
+            Annonce = await _context.Annonces
+                .Include(a => a.TypeContrat)
+                .Include(a => a.ModeTravail)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (Annonce == null)
             {
                 return NotFound();
             }
-            else
-            {
-                Annonce = annonce;
-            }
+
             return Page();
         }
     }

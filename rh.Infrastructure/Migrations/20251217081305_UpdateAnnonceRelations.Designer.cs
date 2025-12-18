@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using rh.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using rh.Infrastructure.Data;
 namespace rh.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251217081305_UpdateAnnonceRelations")]
+    partial class UpdateAnnonceRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +37,7 @@ namespace rh.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DateFin")
+                    b.Property<DateTime>("DateFin")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -55,15 +58,21 @@ namespace rh.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ModeTravailId")
+                        .HasColumnType("int");
+
                     b.Property<string>("NiveauExperience")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TypeContratId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("IdModeTravail");
+                    b.HasIndex("ModeTravailId");
 
-                    b.HasIndex("IdTypeContrat");
+                    b.HasIndex("TypeContratId");
 
                     b.ToTable("Annonces");
                 });
@@ -106,13 +115,13 @@ namespace rh.Infrastructure.Migrations
                 {
                     b.HasOne("rh.Domain.Entities.ModeTravail", "ModeTravail")
                         .WithMany("Annonces")
-                        .HasForeignKey("IdModeTravail")
+                        .HasForeignKey("ModeTravailId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("rh.Domain.Entities.TypeContrat", "TypeContrat")
                         .WithMany("Annonces")
-                        .HasForeignKey("IdTypeContrat")
+                        .HasForeignKey("TypeContratId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

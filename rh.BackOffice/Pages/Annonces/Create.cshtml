@@ -14,14 +14,42 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Annonce.nom" class="control-label"></label>
-                <input asp-for="Annonce.nom" class="form-control" />
-                <span asp-validation-for="Annonce.nom" class="text-danger"></span>
+                <label asp-for="Annonce.Libelle" class="control-label"></label>
+                <input asp-for="Annonce.Libelle" class="form-control" />
+                <span asp-validation-for="Annonce.Libelle" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Annonce.date" class="control-label"></label>
-                <input asp-for="Annonce.date" class="form-control" />
-                <span asp-validation-for="Annonce.date" class="text-danger"></span>
+                <label asp-for="Annonce.Description" class="control-label"></label>
+                <input asp-for="Annonce.Description" class="form-control" />
+                <span asp-validation-for="Annonce.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Annonce.CompetenceRequis" class="control-label"></label>
+                <input asp-for="Annonce.CompetenceRequis" class="form-control" />
+                <span asp-validation-for="Annonce.CompetenceRequis" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Annonce.IdTypeContrat" class="control-label"></label>
+                <select asp-for="Annonce.IdTypeContrat" class ="form-control" asp-items="ViewBag.IdTypeContrat"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Annonce.IdModeTravail" class="control-label"></label>
+                <select asp-for="Annonce.IdModeTravail" class ="form-control" asp-items="ViewBag.IdModeTravail"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Annonce.NiveauExperience" class="control-label"></label>
+                <input asp-for="Annonce.NiveauExperience" class="form-control" />
+                <span asp-validation-for="Annonce.NiveauExperience" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Annonce.Localisation" class="control-label"></label>
+                <input asp-for="Annonce.Localisation" class="form-control" />
+                <span asp-validation-for="Annonce.Localisation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Annonce.DateFin" class="control-label"></label>
+                <input asp-for="Annonce.DateFin" class="form-control" />
+                <span asp-validation-for="Annonce.DateFin" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
