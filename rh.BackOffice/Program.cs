@@ -8,8 +8,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Ajouter Razor Pages
-builder.Services.AddRazorPages();
+// Ajouter Razor Pages et définir Dashboard/Index comme page par défaut
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AddPageRoute("/Dashboard/Index", "");
+});
+
 
 // Ajouter Controllers (API)
 builder.Services.AddControllers();
@@ -30,16 +34,25 @@ app.UseStaticFiles();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "API RH v1");
+    });
 }
 
-// Routing
+app.UseRouting();
+
+app.UseAuthorization();
+
+// Map Controllers
 app.MapControllers();
 
-// Razor Pages
+// Map Razor Pages
 app.MapRazorPages();
-
-// Optionnel : fallback pour tout le reste (SPA ou URLs inconnues)
-app.MapFallbackToPage("/Index");
+app.MapGet("/", context =>
+{
+    context.Response.Redirect("/Dashboard/Index");
+    return Task.CompletedTask;
+});
 
 app.Run();

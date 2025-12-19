@@ -20,7 +20,7 @@ namespace rh.BackOffice.Pages.Dashboard
         // Liste des filtres disponibles pour le dropdown
         public List<(string Value, string Label)> Filters { get; set; } = new()
     {
-        ("TopActives", "Top 5 annonce actives"),
+        ("TopActives", "Top 5 annonces actives"),
         ("TopTerminees", "Top 5 annonces terminées")
     };
 
