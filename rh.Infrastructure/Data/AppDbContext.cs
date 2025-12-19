@@ -14,6 +14,10 @@ namespace rh.Infrastructure.Data
     public DbSet<TypeContrat> TypeContrats { get; set; }
 
     public DbSet<ModeTravail> ModeTravails { get; set; }
+
+    public DbSet<Candidature> Candidature { get; set; }
+    public DbSet<Candidat> Candidat { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

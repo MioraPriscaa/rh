@@ -29,12 +29,12 @@ namespace rh.BackOffice.Pages_Annonces
 
             Annonce = await _context.Annonces
                 .Include(a => a.TypeContrat)
-            .Include(a => a.ModeTravail)
-     .Include(a => a.Candidatures)
-         .ThenInclude(c => c.Candidat)
-     .Include(a => a.Candidatures)
-         .ThenInclude(c => c.Statut) 
-     .FirstOrDefaultAsync(m => m.Id == id);
+                .Include(a => a.ModeTravail)
+                .Include(a => a.Candidatures)
+                .ThenInclude(c => c.Candidat)
+                .Include(a => a.Candidatures)
+                .ThenInclude(c => c.Statut) 
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (Annonce == null)
                 return NotFound();
@@ -44,5 +44,43 @@ namespace rh.BackOffice.Pages_Annonces
 
             return Page();
         }
+
+        public async Task<IActionResult> OnPostValiderAsync(int candidatureId)
+        {
+            
+
+            var candidature = await _context.Candidature
+                .Include(c => c.Annonce)
+                .Include(c => c.Statut)
+                .FirstOrDefaultAsync(c => c.Id == candidatureId);
+
+            if (candidature == null || candidature.Annonce == null)
+                return NotFound("Candidature ou Annonce introuvable");
+
+            candidature.IdStatut = 2; // Validé
+            candidature.Annonce.NbDossierValide += 1;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage(new { id = candidature.Annonce.Id });
+        }
+
+        public async Task<IActionResult> OnPostRefuserAsync(int candidatureId)
+        {
+            var candidature = await _context.Candidature
+                .Include(c => c.Annonce)
+                .FirstOrDefaultAsync(c => c.Id == candidatureId);
+
+            if (candidature == null || candidature.Annonce == null)
+                return NotFound("Candidature ou Annonce introuvable");
+
+            candidature.IdStatut = 5; // Refusé
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage(new { id = candidature.Annonce.Id });
+        }
+
+
+
     }
 }

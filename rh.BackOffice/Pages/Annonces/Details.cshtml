@@ -73,8 +73,11 @@
         </dd>
     </dl>
 </div>
-
-<h4>Candidats ayant postulé</h4>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Annonce.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
+<h4>Candidats ayant postule</h4>
 
 @if (Model.Candidats.Any())
 {
@@ -82,19 +85,42 @@
         <thead>
             <tr>
                 <th>Nom</th>
-                <th>Prénom</th>
+                <th>Prenom</th>
                 <th>Email</th>
                 <th>Statut</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var candidat in Model.Candidats)
             {
+                var candidature = Model.Annonce.Candidatures
+                .FirstOrDefault(c => c.IdCandidat == candidat.Id);
+
                 <tr>
-                    <td>@candidat.Nom</td>
+                    <td>
+                        <a asp-page="/Candidats/Details" asp-route-id="@candidat.Id">
+                            @candidat.Nom
+                        </a>
+                    </td>
                     <td>@candidat.Prenom</td>
                     <td>@candidat.Email</td>
-                    <td>@Model.Annonce.Candidatures.First(c => c.IdCandidat == candidat.Id).Statut.Libelle</td>
+                    <td>@(candidature?.Statut?.Libelle ?? "En attente")</td>
+                    <td>
+                        @* Affiche les boutons uniquement si le statut = 1 *@
+                        @if (candidature != null && candidature.IdStatut == 1)
+                        {
+                            <form method="post" asp-page-handler="Valider" class="d-inline">
+                                <input type="hidden" name="candidatureId" value="@candidature.Id" />
+                                <button class="btn btn-success btn-sm">Valider</button>
+                            </form>
+
+                            <form method="post" asp-page-handler="Refuser" class="d-inline">
+                                <input type="hidden" name="candidatureId" value="@candidature.Id" />
+                                <button class="btn btn-danger btn-sm">Refuser</button>
+                            </form>
+                        }
+                    </td>
                 </tr>
             }
         </tbody>
@@ -106,7 +132,5 @@ else
 }
 
 
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Annonce.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
-</div>
+
+

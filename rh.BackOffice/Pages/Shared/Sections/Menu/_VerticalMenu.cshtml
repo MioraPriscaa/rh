@@ -14,8 +14,15 @@
         <!-- Annonces -->
         <li class='menu-item@(currentPage.StartsWith("/Annonces") ? " active" : "")'>
             <a asp-page="/Annonces/Index" class="menu-link">
-                <i class="menu-icon icon-base bx bx-bullhorn"></i>
+                <i class="menu-icon icon-base bx bx-notification"></i> 
                 <div class="text-truncate">Annonces</div>
+            </a>
+        </li>
+        <!-- Candidats -->
+        <li class='menu-item@(currentPage.StartsWith("/Candidats") ? " active" : "")'>
+            <a asp-page="/Candidats/Index" class="menu-link">
+                <i class="menu-icon icon-base bx bx-group"></i>
+                <div class="text-truncate">Candidats</div>
             </a>
         </li>
     </ul>

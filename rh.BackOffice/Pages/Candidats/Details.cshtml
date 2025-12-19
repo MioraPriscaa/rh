@@ -1,0 +1,85 @@
+@page
+@model rh.BackOffice.Pages_Candidats.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+
+<div>
+    <h4>Fiche du candidat</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Candidat.Nom)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Candidat.Nom)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Candidat.Prenom)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Candidat.Prenom)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Candidat.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Candidat.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Candidat.Password)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Candidat.Password)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Candidat.PieceJointe)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Candidat.PieceJointe)
+        </dd>
+    </dl>
+</div>
+<div>
+    @if (!string.IsNullOrEmpty(Model.ReturnUrl))
+    {
+        <a href="@Model.ReturnUrl">Retour</a>
+    }
+    else
+    {
+        <a asp-page="./Index">Retour</a>
+    }
+
+</div>
+
+
+@if (Model.Candidatures.Any())
+{
+    <h4>Liste des annonces auxquelles le candidat a postule</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Annonce</th>
+                <th>Statut</th>
+                <th>Date fin</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cand in Model.Candidatures)
+            {
+                <tr>
+                    <td>@cand.Annonce?.Libelle</td>
+                    <td>@cand.Statut?.Libelle </td>
+                    <td>@cand.Annonce?.DateFin?.ToString("dd/MM/yyyy")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Le candidat n'a postulé à aucune annonce.</p>
+}
