@@ -2,147 +2,135 @@
 @model rh.BackOffice.Pages_Annonces.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Détails de l'annonce";
 }
 
-<h1>Details</h1>
+<h1 class="mb-4">Détails de l'annonce</h1>
 
-<div>
-    <h4>Annonce</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Annonce.Libelle)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Annonce.Libelle)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Annonce.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Annonce.Description)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Annonce.CompetenceRequis)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Annonce.CompetenceRequis)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Annonce.TypeContrat)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Annonce.TypeContrat.Libelle)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Annonce.ModeTravail)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Annonce.ModeTravail.Libelle)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Annonce.Duree)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Annonce.Duree)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Annonce.NbDossierValide)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Annonce.NbDossierValide)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Annonce.NiveauExperience)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Annonce.NiveauExperience)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Annonce.Localisation)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Annonce.Localisation)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Annonce.DateFin)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Annonce.DateFin)
-        </dd>
-    </dl>
+<!-- Infos Annonce -->
+<div class="card mb-4 shadow-sm">
+    <div class="card-header bg-primary text-white">
+        <strong>Informations générales</strong>
+    </div>
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-4 fw-semibold">Libellé</dt>
+            <dd class="col-sm-8">@Model.Annonce.Libelle</dd>
+
+            <dt class="col-sm-4 fw-semibold">Description</dt>
+            <dd class="col-sm-8">@Model.Annonce.Description</dd>
+
+            <dt class="col-sm-4 fw-semibold">Compétences requises</dt>
+            <dd class="col-sm-8">@Model.Annonce.CompetenceRequis</dd>
+
+            <dt class="col-sm-4 fw-semibold">Type de contrat</dt>
+            <dd class="col-sm-8">@Model.Annonce.TypeContrat?.Libelle</dd>
+
+            <dt class="col-sm-4 fw-semibold">Mode de travail</dt>
+            <dd class="col-sm-8">@Model.Annonce.ModeTravail?.Libelle</dd>
+
+            <dt class="col-sm-4 fw-semibold">Durée</dt>
+            <dd class="col-sm-8">@Model.Annonce.Duree</dd>
+
+            <dt class="col-sm-4 fw-semibold">Dossiers validés</dt>
+            <dd class="col-sm-8">@Model.Annonce.NbDossierValide</dd>
+
+            <dt class="col-sm-4 fw-semibold">Niveau d'expérience</dt>
+            <dd class="col-sm-8">@Model.Annonce.NiveauExperience</dd>
+
+            <dt class="col-sm-4 fw-semibold">Localisation</dt>
+            <dd class="col-sm-8">@Model.Annonce.Localisation</dd>
+
+            <dt class="col-sm-4 fw-semibold">Date de fin</dt>
+            <dd class="col-sm-8">@Model.Annonce.DateFin?.ToShortDateString()</dd>
+        </dl>
+
+        <div class="mt-3 d-flex gap-2">
+            <a asp-page="./Edit" asp-route-id="@Model.Annonce.Id" class="btn btn-warning">
+                <i class="bi bi-pencil-square"></i> Modifier
+            </a>
+            <a asp-page="./Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Retour
+            </a>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Annonce.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
-</div>
-<h4>Candidats ayant postule</h4>
+
+<!-- Candidats -->
+<h4 class="mb-3">Candidats ayant postulé</h4>
 
 @if (Model.Candidats.Any())
 {
     @if (Model.Candidats.Any(c => Model.Annonce.Candidatures
-        .Any(a => a.IdCandidat == c.Id && a.Statut.Libelle == "Accepté")))
+            .Any(a => a.IdCandidat == c.Id && a.Statut?.Libelle == "Accepté")))
     {
-        <form method="post" asp-page-handler="ExportExcel">
+        <form method="post" asp-page-handler="ExportExcel" class="mb-3">
             <input type="hidden" name="id" value="@Model.Annonce.Id" />
-            <button type="submit" class="btn btn-primary mb-2">
-                Exporter les acceptés en Excel
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-file-earmark-excel"></i> Exporter les acceptés en Excel
             </button>
         </form>
-
     }
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>Email</th>
-                <th>Statut</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var candidat in Model.Candidats)
-            {
-                var candidature = Model.Annonce.Candidatures
-                .FirstOrDefault(c => c.IdCandidat == candidat.Id);
-
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-dark">
                 <tr>
-                    <td>
-                        <a asp-page="/Candidats/Details" asp-route-id="@candidat.Id">
-                            @candidat.Nom
-                        </a>
-                    </td>
-                    <td>@candidat.Prenom</td>
-                    <td>@candidat.Email</td>
-                    <td>@(candidature?.Statut?.Libelle ?? "En attente")</td>
-                    <td>
-                        @* Affiche les boutons uniquement si le statut = 1 *@
-                        @if (candidature != null && candidature.IdStatut == 1)
-                        {
-                            <form method="post" asp-page-handler="Valider" class="d-inline">
-                                <input type="hidden" name="candidatureId" value="@candidature.Id" />
-                                <button class="btn btn-success btn-sm">Valider</button>
-                            </form>
-
-                            <form method="post" asp-page-handler="Refuser" class="d-inline">
-                                <input type="hidden" name="candidatureId" value="@candidature.Id" />
-                                <button class="btn btn-danger btn-sm">Refuser</button>
-                            </form>
-                        }
-                    </td>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Email</th>
+                    <th>Statut</th>
+                    <th>Action</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var candidat in Model.Candidats)
+                {
+                    var candidature = Model.Annonce.Candidatures
+                    .FirstOrDefault(c => c.IdCandidat == candidat.Id);
+
+                    <tr>
+                        <td>
+                            <a asp-page="/Candidats/Details" asp-route-id="@candidat.Id" class="text-decoration-none">
+                                @candidat.Nom
+                            </a>
+                        </td>
+                        <td>@candidat.Prenom</td>
+                        <td>@candidat.Email</td>
+                        <td>
+                            @if (candidature?.Statut != null)
+                            {
+                                <span class="badge @(candidature.Statut.Libelle == "Accepté" ? "bg-success" :
+                                                                                          candidature.Statut.Libelle == "Refusé" ? "bg-danger" : "bg-warning")">
+                        @candidature.Statut.Libelle
+                    </span>
+                                        }
+                            else
+                            {
+                                <span class="badge bg-secondary">En attente</span>
+                            }
+                        </td>
+                        <td>
+                            @if (candidature != null && candidature.IdStatut == 1)
+                            {
+                                <form method="post" asp-page-handler="Valider" class="d-inline">
+                                    <input type="hidden" name="candidatureId" value="@candidature.Id" />
+                                    <button class="btn btn-success btn-sm">Valider</button>
+                                </form>
+
+                                <form method="post" asp-page-handler="Refuser" class="d-inline">
+                                    <input type="hidden" name="candidatureId" value="@candidature.Id" />
+                                    <button class="btn btn-danger btn-sm">Refuser</button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
 else
 {
-    <p>Aucun candidat n'a postulé pour cette annonce.</p>
+    <p class="text-muted">Aucun candidat n'a postulé pour cette annonce.</p>
 }
-
-
-
-

@@ -2,68 +2,72 @@
 @model rh.BackOffice.Pages_Annonces.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Créer une annonce";
 }
 
-<h1>Create</h1>
+<h1 class="mb-4">Créer une annonce</h1>
 
-<h4>Annonce</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Annonce.Libelle" class="control-label"></label>
+    <div class="col-md-6 col-lg-5">
+        <form method="post" class="needs-validation" novalidate>
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="Annonce.Libelle" class="form-label"></label>
                 <input asp-for="Annonce.Libelle" class="form-control" />
                 <span asp-validation-for="Annonce.Libelle" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Annonce.Description" class="control-label"></label>
-                <input asp-for="Annonce.Description" class="form-control" />
+
+            <div class="mb-3">
+                <label asp-for="Annonce.Description" class="form-label"></label>
+                <textarea asp-for="Annonce.Description" class="form-control" rows="3"></textarea>
                 <span asp-validation-for="Annonce.Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Annonce.CompetenceRequis" class="control-label"></label>
+
+            <div class="mb-3">
+                <label asp-for="Annonce.CompetenceRequis" class="form-label"></label>
                 <input asp-for="Annonce.CompetenceRequis" class="form-control" />
                 <span asp-validation-for="Annonce.CompetenceRequis" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Annonce.IdTypeContrat" class="control-label"></label>
-                <select asp-for="Annonce.IdTypeContrat" class ="form-control" asp-items="ViewBag.IdTypeContrat"></select>
+
+            <div class="mb-3">
+                <label asp-for="Annonce.IdTypeContrat" class="form-label"></label>
+                <select asp-for="Annonce.IdTypeContrat" class="form-select" asp-items="ViewBag.IdTypeContrat"></select>
             </div>
-            <div class="form-group">
-                <label asp-for="Annonce.IdModeTravail" class="control-label"></label>
-                <select asp-for="Annonce.IdModeTravail" class ="form-control" asp-items="ViewBag.IdModeTravail"></select>
+
+            <div class="mb-3">
+                <label asp-for="Annonce.IdModeTravail" class="form-label"></label>
+                <select asp-for="Annonce.IdModeTravail" class="form-select" asp-items="ViewBag.IdModeTravail"></select>
             </div>
-            <div class="form-group">
-                <label asp-for="Annonce.Duree" class="control-label"></label>
+
+            <div class="mb-3">
+                <label asp-for="Annonce.Duree" class="form-label"></label>
                 <input asp-for="Annonce.Duree" class="form-control" />
                 <span asp-validation-for="Annonce.Duree" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Annonce.NiveauExperience" class="control-label"></label>
+
+            <div class="mb-3">
+                <label asp-for="Annonce.NiveauExperience" class="form-label"></label>
                 <input asp-for="Annonce.NiveauExperience" class="form-control" />
                 <span asp-validation-for="Annonce.NiveauExperience" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Annonce.Localisation" class="control-label"></label>
+
+            <div class="mb-3">
+                <label asp-for="Annonce.Localisation" class="form-label"></label>
                 <input asp-for="Annonce.Localisation" class="form-control" />
                 <span asp-validation-for="Annonce.Localisation" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Annonce.DateFin" class="control-label"></label>
-                <input asp-for="Annonce.DateFin" class="form-control" />
+
+            <div class="mb-3">
+                <label asp-for="Annonce.DateFin" class="form-label"></label>
+                <input asp-for="Annonce.DateFin" type="date" class="form-control" />
                 <span asp-validation-for="Annonce.DateFin" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+
+            <div class="d-flex gap-2">
+                <input type="submit" value="Créer" class="btn btn-primary" />
+                <a asp-page="Index" class="btn btn-secondary">Retour</a>
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
-

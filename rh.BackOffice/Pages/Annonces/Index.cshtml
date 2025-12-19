@@ -2,89 +2,62 @@
 @model rh.BackOffice.Pages_Annonces.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Liste des annonces";
 }
 
-<h1>Liste annonces</h1>
+<h1 class="mb-4">Liste des annonces</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Annonce[0].Libelle)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Annonce[0].Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Annonce[0].CompetenceRequis)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Annonce[0].TypeContrat)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Annonce[0].ModeTravail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Annonce[0].Duree)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Annonce[0].NbDossierValide)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Annonce[0].NiveauExperience)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Annonce[0].Localisation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Annonce[0].DateFin)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Annonce) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Libelle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompetenceRequis)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TypeContrat.Libelle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModeTravail.Libelle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Duree)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NbDossierValide)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NiveauExperience)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Localisation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateFin)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="mb-3">
+    <a asp-page="Create" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Ajouter une annonce
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Annonce[0].Libelle)</th>
+                <th>@Html.DisplayNameFor(model => model.Annonce[0].Description)</th>
+                <th>@Html.DisplayNameFor(model => model.Annonce[0].CompetenceRequis)</th>
+                <th>@Html.DisplayNameFor(model => model.Annonce[0].TypeContrat)</th>
+                <th>@Html.DisplayNameFor(model => model.Annonce[0].ModeTravail)</th>
+                <th>@Html.DisplayNameFor(model => model.Annonce[0].Duree)</th>
+                <th>@Html.DisplayNameFor(model => model.Annonce[0].NbDossierValide)</th>
+                <th>@Html.DisplayNameFor(model => model.Annonce[0].NiveauExperience)</th>
+                <th>@Html.DisplayNameFor(model => model.Annonce[0].Localisation)</th>
+                <th>@Html.DisplayNameFor(model => model.Annonce[0].DateFin)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Annonce)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Libelle)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CompetenceRequis)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TypeContrat.Libelle)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ModeTravail.Libelle)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Duree)</td>
+                    <td>@Html.DisplayFor(modelItem => item.NbDossierValide)</td>
+                    <td>@Html.DisplayFor(modelItem => item.NiveauExperience)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Localisation)</td>
+                    <td>@(item.DateFin.HasValue? item.DateFin.Value.ToShortDateString() : "")</td>
+
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning mb-1">
+                            <i class="bi bi-pencil-square"></i> Edit
+                        </a>
+                        <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-sm btn-info mb-1 text-white">
+                            <i class="bi bi-eye"></i> Details
+                        </a>
+                        <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger mb-1">
+                            <i class="bi bi-trash"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
