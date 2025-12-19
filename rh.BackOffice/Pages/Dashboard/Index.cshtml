@@ -1,0 +1,55 @@
+﻿@page "{filter?}"
+
+@model rh.BackOffice.Pages.Dashboard.IndexModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+<h2>Dashboard</h2>
+
+<div class="mb-3 d-flex align-items-center">
+    <label class="me-2 fw-bold">Filtrer :</label>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            @Model.Filters.FirstOrDefault(f => f.Value == Model.CurrentFilter).Label
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="filterDropdown">
+            @foreach (var f in Model.Filters)
+            {
+                <li>
+                    <a class="dropdown-item" asp-page="./Index" asp-route-filter="@f.Value">
+                        @f.Label
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+<h4>
+    @Model.Filters.FirstOrDefault(f => f.Value == Model.CurrentFilter).Label
+</h4>
+
+
+<div class="row">
+    @foreach (var annonce in Model.TopAnnonces)
+    {
+        <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">@annonce.Libelle</h5>
+                    <p class="card-text">
+                        <span class="badge bg-primary fs-6">@annonce.NombreCandidatures candidatures</span>
+                    </p>
+                    <div class="mt-auto">
+                        <a asp-page="/Annonces/Details"
+                           asp-route-id="@annonce.AnnonceId"
+                           class="btn btn-outline-info btn-sm w-100">
+                            Voir l’annonce
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

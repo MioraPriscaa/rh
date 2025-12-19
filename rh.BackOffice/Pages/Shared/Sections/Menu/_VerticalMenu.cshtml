@@ -11,6 +11,13 @@
     <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1">
+        <!-- Dashborad -->
+        <li class='menu-item@(currentPage.StartsWith("/Dashboard") ? " active" : "")'>
+            <a asp-page="/Dashboard/Index" class="menu-link">
+                <i class="menu-icon icon-base bx bx-home"></i>
+                <div class="text-truncate">Dashboard</div>
+            </a>
+        </li>
         <!-- Annonces -->
         <li class='menu-item@(currentPage.StartsWith("/Annonces") ? " active" : "")'>
             <a asp-page="/Annonces/Index" class="menu-link">

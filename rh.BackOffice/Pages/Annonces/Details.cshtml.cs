@@ -83,7 +83,7 @@ namespace rh.BackOffice.Pages_Annonces
 
         public async Task<IActionResult> OnPostExportExcelAsync(int id)
         {
-            // Recharger l'annonce avec les relations nécessaires
+           
             Annonce = await _context.Annonces
                 .Include(a => a.Candidatures)
                     .ThenInclude(c => c.Candidat)
