@@ -1,12 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using rh.Domain.Entities;
 using rh.Infrastructure.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace rh.BackOffice.Pages_Annonces
 {
@@ -79,6 +80,64 @@ namespace rh.BackOffice.Pages_Annonces
 
             return RedirectToPage(new { id = candidature.Annonce.Id });
         }
+
+        public async Task<IActionResult> OnPostExportExcelAsync(int id)
+        {
+            // Recharger l'annonce avec les relations nécessaires
+            Annonce = await _context.Annonces
+                .Include(a => a.Candidatures)
+                    .ThenInclude(c => c.Candidat)
+                .Include(a => a.Candidatures)
+                    .ThenInclude(c => c.Statut)
+                .FirstOrDefaultAsync(a => a.Id == id);
+
+            if (Annonce == null)
+            {
+                return Content("Annonce non trouvée !");
+            }
+
+            if (Annonce.Candidatures == null || !Annonce.Candidatures.Any())
+            {
+                return Content("Aucune candidature liée à cette annonce !");
+            }
+
+            foreach (var c in Annonce.Candidatures)
+            {
+                var nomCandidat = c.Candidat?.Nom ?? "Candidat null";
+                var statut = c.Statut?.Libelle ?? "Statut null";
+                Console.WriteLine($"{nomCandidat} - {statut}");
+            }
+
+
+            var acceptes = Annonce.Candidatures
+                .Where(c => c.Statut != null && c.Candidat != null && c.Statut.Id == 2)
+                .Select(c => new
+                {
+                    Nom = c.Candidat.Nom ?? "",
+                    Prenom = c.Candidat.Prenom ?? "",
+                    Email = c.Candidat.Email ?? "",
+                    Statut = c.Statut.Libelle
+                })
+                .ToList();
+
+            if (!acceptes.Any())
+            {
+                return BadRequest("Aucune candidature acceptée à exporter.");
+            }
+
+            var sb = new StringBuilder();
+            sb.AppendLine("Nom,Prenom,Email,Statut");
+            foreach (var c in acceptes)
+            {
+                sb.AppendLine($"{c.Nom},{c.Prenom},{c.Email},{c.Statut}");
+            }
+
+            byte[] fileBytes = Encoding.UTF8.GetBytes(sb.ToString());
+            string fileName = "CandidatsAcceptes.csv";
+
+            return File(fileBytes, "text/csv", fileName);
+        }
+
 
 
 

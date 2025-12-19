@@ -81,6 +81,18 @@
 
 @if (Model.Candidats.Any())
 {
+    @if (Model.Candidats.Any(c => Model.Annonce.Candidatures
+        .Any(a => a.IdCandidat == c.Id && a.Statut.Libelle == "Accepté")))
+    {
+        <form method="post" asp-page-handler="ExportExcel">
+            <input type="hidden" name="id" value="@Model.Annonce.Id" />
+            <button type="submit" class="btn btn-primary mb-2">
+                Exporter les acceptés en Excel
+            </button>
+        </form>
+
+    }
+
     <table class="table table-striped">
         <thead>
             <tr>
