@@ -13,18 +13,14 @@ namespace rh.Domain.Entities
         public string? Description { get; set; }
         public string? CompetenceRequis { get; set; }
 
-        // 🔗 Type de contrat
         public int IdTypeContrat { get; set; }
         public TypeContrat? TypeContrat { get; set; }
 
-        // 🔗 Mode de travail
         public int IdModeTravail { get; set; }
         public ModeTravail? ModeTravail { get; set; }
 
-        // 🕒 Durée en mois
         public int Duree { get; set; }
 
-        // 📂 Nombre de dossiers validés (par défaut 0)
         public int NbDossierValide { get; set; } = 0;
 
         public string? NiveauExperience { get; set; }
@@ -32,7 +28,8 @@ namespace rh.Domain.Entities
 
         public DateTime? DateFin { get; set; }
 
-        // 🔗 Candidatures
+        public DateTime DateCreation { get; set; }
+
         public ICollection<Candidature> Candidatures { get; set; } = new List<Candidature>();
     }
 }

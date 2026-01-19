@@ -53,6 +53,10 @@ namespace rh.Infrastructure.Data
                 .Property(a => a.NbDossierValide)
                 .HasDefaultValue(0);
 
+            modelBuilder.Entity<Annonce>()
+                .Property(a => a.DateCreation)
+                .HasDefaultValueSql("GETDATE()");
+
         }
 
     }
