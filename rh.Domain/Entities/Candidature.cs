@@ -14,10 +14,11 @@ namespace rh.Domain.Entities
         public int IdAnnonce { get; set; }
         public long IdCandidat { get; set; }
         public long IdStatut { get; set; }
-
+        public double? ScoreCorrespondance { get; set; }
         // 🔗 Navigation
         public Annonce Annonce { get; set; } = null!;
         public Candidat Candidat { get; set; } = null!;
         public Statut Statut { get; set; } = null!;
+        
     }
 }

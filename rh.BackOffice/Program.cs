@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
+using rh.BackOffice.Services.AI;
 using rh.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +14,9 @@ builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AddPageRoute("/Dashboard/Index", "");
 });
-
+// ? AJOUTER TES SERVICES AI
+builder.Services.AddScoped<EmbeddingService>();      // <--- essentiel
+builder.Services.AddScoped<CandidatureAiService>();
 
 // Ajouter Controllers (API)
 builder.Services.AddControllers();
@@ -24,6 +27,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "API RH", Version = "v1" });
 });
+
 
 var app = builder.Build();
 

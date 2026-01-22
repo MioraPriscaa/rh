@@ -18,6 +18,29 @@
         <thead class="table-dark">
             <tr>
                 <th>@Html.DisplayNameFor(model => model.Annonce[0].Libelle)</th>
+                <th>
+                    <a asp-page="./Index"
+                       asp-route-sortOrder="@Model.DateCreationSort"
+                       class="text-white text-decoration-none d-flex align-items-center">
+                        Date création
+                        <span class="ms-1">
+                            @if (Model.CurrentSort == "date_asc")
+                            {
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5" />
+                                </svg>
+                            }
+                            else if (Model.CurrentSort == "date_desc")
+                            {
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4" />
+                                </svg>
+                            }
+                        </span>
+                    </a>
+
+
+                </th>
                 <th>@Html.DisplayNameFor(model => model.Annonce[0].Description)</th>
                 <th>@Html.DisplayNameFor(model => model.Annonce[0].CompetenceRequis)</th>
                 <th>@Html.DisplayNameFor(model => model.Annonce[0].TypeContrat)</th>
@@ -35,6 +58,10 @@
             {
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.Libelle)</td>
+                    <td>
+                        @item.DateCreation.ToString("dd/MM/yyyy")
+                    </td>
+
                     <td>@Html.DisplayFor(modelItem => item.Description)</td>
                     <td>@Html.DisplayFor(modelItem => item.CompetenceRequis)</td>
                     <td>@Html.DisplayFor(modelItem => item.TypeContrat.Libelle)</td>

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using rh.BackOffice.Services.AI;
 using rh.Domain.Entities;
 using rh.Infrastructure.Data;
 using System;
@@ -14,10 +15,11 @@ namespace rh.BackOffice.Pages_Annonces
     public class DetailsModel : PageModel
     {
         private readonly rh.Infrastructure.Data.AppDbContext _context;
-
-        public DetailsModel(rh.Infrastructure.Data.AppDbContext context)
+        private readonly CandidatureAiService _aiService;
+        public DetailsModel(rh.Infrastructure.Data.AppDbContext context, CandidatureAiService aiService)
         {
             _context = context;
+            _aiService = aiService;
         }
 
         public Annonce Annonce { get; set; } = default!;
@@ -137,7 +139,11 @@ namespace rh.BackOffice.Pages_Annonces
 
             return File(fileBytes, "text/csv", fileName);
         }
-
+        public async Task<IActionResult> OnPostAnalyserCvsAsync(int annonceId)
+        {
+            await _aiService.AnalyserAnnonceAsync(annonceId);
+            return RedirectToPage(new { id = annonceId });
+        }
 
 
 
