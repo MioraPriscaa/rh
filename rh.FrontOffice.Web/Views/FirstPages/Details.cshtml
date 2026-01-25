@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Details Annonces";
+    Layout = "~/Views/Shared/_BlankLayout.cshtml";
+}
+
+@model rh.Domain.Entities.Annonce
+
+<div class='layout-wrapper layout-content-navbar'>
+    <div class='layout-container'>
+        <div class="layout-page">
+            <nav class="navbar navbar-example navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-ex-3">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbar-ex-3">
+                        <div class="navbar-nav me-auto">
+                            <form class="d-flex" onsubmit="return false">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="icon-base bx bx-search"></i></span>
+                                    <input type="text" class="form-control" placeholder="Rechercher..." />
+                                </div>
+                            </form>
+                        </div>
+
+                        <form onsubmit="return false">
+                            <a href="@Url.Action("LoginBasic", "Auth")" class="btn btn-primary">Se connecter</a>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+            <div class="col-xl-12">
+                <div class="nav-align-top">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">Annonce @Model.Id</div>
+                            <div class="card-body">
+                                <h5 class="card-title">@Model.Libelle</h5>
+                                <p class="card-text">
+                                    @Model.Description
+                                </p>
+                                <p><b>Type de contrat : </b>@Model.TypeContrat?.Libelle</p>
+                                <p class="card-text"><b>Durée </b>: @Model.Duree</p>
+                                <p class="card-text"><b>Niveau d'experience </b>: @Model.NiveauExperience</p>
+                                <p class="card-text"><b>Mode de travail </b>: @Model.ModeTravail?.Libelle</p>
+                                <p class="card-text"><b>Localisation </b>: @Model.Localisation</p>
+                                <div class="demo-inline-spacing">
+                                    <a href="/Auth/LoginBasic?idannonce=@Model.Id" class="btn btn-primary">
+                                        Postuler
+                                    </a>
+
+                                    <a href="javascript:void(0)" class="btn btn-secondary">
+                                        <span class="icon-base bx bx-bookmark icon-md me-4"></span>
+                                        Sauvegarder
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

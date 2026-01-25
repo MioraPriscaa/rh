@@ -67,7 +67,7 @@ namespace rh.Infrastructure.Data
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
 
             // Remplace la chaîne de connexion par la tienne
-            optionsBuilder.UseSqlServer("Server=.;Database=rh_db;Trusted_Connection=True;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("Server=localhost;Database=rh_db;Trusted_Connection=True;TrustServerCertificate=True;");
 
             return new AppDbContext(optionsBuilder.Options);
         }

@@ -1,0 +1,38 @@
+﻿@{
+    TempData.Keep();
+    string? currentPage = ViewContext.HttpContext.Request.Path;
+}
+
+<!-- Menu -->
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+
+
+    <div class="menu-divider mt-0"></div>
+    <div class="menu-inner-shadow"></div>
+
+    <ul class="menu-inner py-1">
+        <!-- Dashborad -->
+        <li class='menu-item@(currentPage.StartsWith("/Dashboard") ? " active" : "")'>
+            <a asp-page="/Dashboard/Index" class="menu-link">
+                <i class="menu-icon icon-base bx bx-home"></i>
+                <div class="text-truncate">Dashboard</div>
+            </a>
+        </li>
+        <!-- Annonces -->
+        <li class='menu-item@(currentPage.StartsWith("/Annonces") ? " active" : "")'>
+            <a asp-page="/Annonces/Index" class="menu-link">
+                <i class="menu-icon icon-base bx bx-notification"></i> 
+                <div class="text-truncate">Annonces</div>
+            </a>
+        </li>
+        <!-- Candidats -->
+        <li class='menu-item@(currentPage.StartsWith("/Candidats") ? " active" : "")'>
+            <a asp-page="/Candidats/Index" class="menu-link">
+                <i class="menu-icon icon-base bx bx-group"></i>
+                <div class="text-truncate">Candidats</div>
+            </a>
+        </li>
+    </ul>
+
+</aside>
+<!-- / Menu -->
