@@ -65,7 +65,7 @@
 @if (Model.Candidats.Any())
 {
     @if (Model.Candidats.Any(c => Model.Annonce.Candidatures
-            .Any(a => a.IdCandidat == c.Id && a.Statut?.Libelle == "Accepté")))
+                .Any(a => a.IdCandidat == c.Id && a.Statut?.Libelle == "Accepté")))
     {
         <form method="post" asp-page-handler="ExportExcel" class="mb-3">
             <input type="hidden" name="id" value="@Model.Annonce.Id" />
@@ -73,7 +73,7 @@
                 <i class="bi bi-file-earmark-excel"></i> Exporter les acceptés en Excel
             </button>
         </form>
-       
+
 
     }
     <form method="post" asp-page-handler="AnalyserCvs" class="mb-3">
@@ -112,10 +112,10 @@
                             @if (candidature?.Statut != null)
                             {
                                 <span class="badge @(candidature.Statut.Libelle == "Accepté" ? "bg-success" :
-                                                                                          candidature.Statut.Libelle == "Refusé" ? "bg-danger" : "bg-warning")">
-                        @candidature.Statut.Libelle
-                    </span>
-                                        }
+                                                                                                                                candidature.Statut.Libelle == "Refusé" ? "bg-danger" : "bg-warning")">
+                                    @candidature.Statut.Libelle
+                                </span>
+                            }
                             else
                             {
                                 <span class="badge bg-secondary">En attente</span>
@@ -124,18 +124,15 @@
                         <td>
                             @if (candidature?.ScoreCorrespondance != null)
                             {
-                                @{
-    var score = candidature.ScoreCorrespondance;
-    var percent = score.HasValue ? Math.Round(score.Value * 100) : 0;
-}
+                                var score = candidature.ScoreCorrespondance;
+                                var percent = score.HasValue ? Math.Round(score.Value * 100) : 0;
 
-<span class="badge @(score > 0.75 ? "bg-success" :
-                    score > 0.5  ? "bg-warning" :
-                                   "bg-secondary")">
-    @percent %
-</span>
-
-                                        }
+                                <span class="badge @(score > 0.75 ? "bg-success" :
+                                                          score > 0.5 ? "bg-warning" :
+                                                                         "bg-secondary")">
+                                    @percent %
+                                </span>
+                            }
                             else
                             {
                                 <span class="text-muted">-</span>

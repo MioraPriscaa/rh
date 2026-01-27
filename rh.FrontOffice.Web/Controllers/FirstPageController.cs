@@ -24,10 +24,15 @@ namespace rh.FrontOffice.Web.Controllers
         public async Task<IActionResult> GetActiveAnnonces()
         {
             var today = DateTime.Today;
+            int? idcandidat = HttpContext.Session.GetInt32("UserId");
             var annonces = await _context.Annonces
                 .Where(a => a.DateFin == null || a.DateFin >= today)
                 .ToListAsync();
-
+            if (idcandidat == null)
+            {
+                return View("~/Views/FirstPages/Index.cshtml", annonces);
+            }
+            ViewBag.iduser = idcandidat;
             return View("~/Views/FirstPages/Index.cshtml", annonces);
 
         }
@@ -36,6 +41,7 @@ namespace rh.FrontOffice.Web.Controllers
         {
             if (id == null)
                 return NotFound();
+            int? idcandidat = HttpContext.Session.GetInt32("UserId");
 
             var annonce = await _context.Annonces
                 .Include(a => a.ModeTravail)
@@ -44,6 +50,7 @@ namespace rh.FrontOffice.Web.Controllers
 
             if (annonce == null)
                 return NotFound();
+            ViewBag.iduser = idcandidat;
 
             return View("~/Views/FirstPages/Details.cshtml", annonce);
         }

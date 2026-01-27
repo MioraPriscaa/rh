@@ -1,10 +1,9 @@
 ﻿@{
-    ViewData["Title"] = "Questionnaire";
+    ViewData["Title"] = "Postule";
 }
-@* ************** Content ************** *@
 <div class="col-md-12">
     <div class="card">
-        <h5 class="card-header">Candidature pour @ViewBag.TitleAnnonce</h5>
+        <h5 class="card-header">Candidature pour le poste de @ViewBag.TitleAnnonce</h5>
         <div class="card-body">
             <div class="row g-0">
                 <div class="col-md p-6">
@@ -37,8 +36,10 @@
                     </script>
                 </div>
             </div>
-            <a href="@Url.Action("Accueil", "Accueil")" class="btn btn-primary">Postuler</a>
-
+            <form method="post" action="/Postule/create">
+                <input type="hidden" name="idAnnonce" value="@ViewBag.IdAnnonce" />
+                <button type="submit" class="btn btn-primary">Postuler</button>
+            </form>
         </div>
     </div>
 </div>
