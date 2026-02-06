@@ -1,0 +1,68 @@
+﻿@{
+    Layout = "~/Views/Shared/_BlankLayout.cshtml";
+    ViewData["Title"] = "Register";
+}
+
+@section PageStyles {
+    <link rel="stylesheet" href="~/vendor/css/pages/page-auth.css" />
+}
+
+<div class="container-xxl">
+    <div class="authentication-wrapper authentication-basic container-p-y">
+        <div class="authentication-inner">
+            <div class="card px-sm-6 px-0">
+                <div class="card-body">
+                    <div class="app-brand justify-content-center mb-6">
+                        <a href="/" class="app-brand-link gap-2">
+                            <span class="app-brand-logo demo">@await Html.PartialAsync("../_Partials/_Macros")</span>
+                            <span class="app-brand-text demo text-heading fw-bold">@TempData.Peek("appName")</span>
+                        </a>
+                    </div>
+                    <h4 class="mb-1">Inscription</h4>
+
+                    <form id="formAuthentication" class="mb-6" action="/Auth/createCandidat" method="POST" enctype="multipart/form-data">
+                        <div class="mb-6">
+                            <label for="nom" class="form-label">Nom</label>
+                            <input type="text" class="form-control" id="nom" name="nom" placeholder="votre nom" autofocus />
+                        </div>
+                        <div class="mb-6">
+                            <label for="prenom" class="form-label">Prénom</label>
+                            <input type="text" class="form-control" id="prenom" name="prenom" placeholder="votre prénom" autofocus />
+                        </div>
+                        <div class="mb-6">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="votre email" />
+                        </div>
+                        <div class="mb-6">
+                            <label for="newcv" class="form-label">Fichier CV</label>
+                            <input class="form-control" type="file" id="formFile" name="newcv" required />
+                        </div>
+                        <div class="form-password-toggle">
+                            <label class="form-label" for="password">Mot de passe</label>
+                            <div class="input-group input-group-merge">
+                                <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
+                                <span class="input-group-text cursor-pointer"><i class="icon-base bx bx-hide"></i></span>
+                            </div>
+                        </div>
+                        <div class="mb-8">
+                            <div class="d-flex justify-content-between">
+                                <input type="hidden" name="idannonce" value="@ViewBag.IdAnnonce" />
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <button class="btn btn-primary d-grid w-100">Sign up</button>
+                        </div>
+                    </form>
+
+                    @*   <p class="text-center">
+                        <span>Already have an account?</span>
+                        <a href="/Auth/LoginBasic">
+                            <span>Sign in instead</span>
+                        </a>
+                    </p> *@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

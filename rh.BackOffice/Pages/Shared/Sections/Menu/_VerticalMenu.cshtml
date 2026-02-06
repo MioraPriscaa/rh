@@ -1,7 +1,6 @@
 ﻿@{
     TempData.Keep();
     string? currentPage = ViewContext.HttpContext.Request.Path;
-    var userId = Context.Session.GetInt32("UserId");
 }
 
 <!-- Menu -->
@@ -26,9 +25,10 @@
                 <div class="text-truncate">Annonces</div>
             </a>
         </li>
-        @if (userId != null)
+
+        <!-- Candidats -->
+        @if (!string.IsNullOrEmpty(ViewBag.iduser as string))
         {
-            <!-- Candidats -->
             <li class='menu-item@(currentPage.StartsWith("/Candidats") ? " active" : "")'>
                 <a asp-page="/Candidats/Index" class="menu-link">
                     <i class="menu-icon icon-base bx bx-group"></i>

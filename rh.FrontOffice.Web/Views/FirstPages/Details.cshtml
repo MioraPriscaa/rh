@@ -52,10 +52,18 @@
                                 <p class="card-text"><b>Mode de travail </b>: @Model.ModeTravail?.Libelle</p>
                                 <p class="card-text"><b>Localisation </b>: @Model.Localisation</p>
                                 <div class="demo-inline-spacing">
-                                    <a href="/Auth/LoginBasic?idannonce=@Model.Id" class="btn btn-primary">
-                                        Postuler
-                                    </a>
-
+                                    @if (ViewBag.iduser == null)
+                                    {
+                                        <a href="/Auth/LoginBasic?idannonce=@Model.Id" class="btn btn-primary">
+                                            Postuler
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/Postule/Postule?idannonce=@Model.Id" class="btn btn-primary">
+                                            Postuler
+                                        </a>
+                                    }
                                     <a href="javascript:void(0)" class="btn btn-secondary">
                                         <span class="icon-base bx bx-bookmark icon-md me-4"></span>
                                         Sauvegarder
