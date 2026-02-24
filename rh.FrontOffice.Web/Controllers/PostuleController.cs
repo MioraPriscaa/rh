@@ -47,7 +47,11 @@ namespace rh.FrontOffice.Web.Controllers
                 .FirstOrDefaultAsync(m => m.Id == idannonce);
             ViewBag.TitleAnnonce = annonce?.Libelle;
             ViewBag.IdAnnonce = idannonce;
-            ViewBag.PieceJointe = candidat.PieceJointe;
+
+            // Remplacement de la ligne problématique pour gérer le cas où PieceJointe peut être null
+            string nomFichier = candidat.PieceJointe != null ? Path.GetFileName(candidat.PieceJointe) : string.Empty;
+
+            ViewBag.PieceJointe = nomFichier;
             return View("~/Views/Postule/Index.cshtml");
         }
 
@@ -73,12 +77,17 @@ namespace rh.FrontOffice.Web.Controllers
         }
 
         [HttpPost, ActionName("create")]
-        public async Task<IActionResult> CreateCandidature(int idAnnonce)
+        public async Task<IActionResult> CreateCandidature(int idAnnonce, IFormFile? newcv)
         {
             int? idcandidat = HttpContext.Session.GetInt32("UserId");
             if (idcandidat == null)
             {
                 return RedirectToAction("LoginBasic", "Auth");
+            }
+
+            if (newcv != null)
+            {
+                UpdateCV(newcv);
             }
 
             var candidature = new Candidature
@@ -91,7 +100,66 @@ namespace rh.FrontOffice.Web.Controllers
             _context.Candidature.Add(candidature);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Details", "FirstPage", new { id = idAnnonce });
+            return RedirectToAction("GetActiveAnnonces", "FirstPage");
+        }
+
+        private void UpdateCV(IFormFile newcv)
+        {
+            int? idcandidat = HttpContext.Session.GetInt32("UserId");
+            if (idcandidat == null)
+                return;
+
+            var candidat = _context.Candidat.FirstOrDefault(c => c.Id == idcandidat);
+            if (candidat == null)
+                return;
+
+            string nom = candidat.Nom ?? "";
+            string prenom = candidat.Prenom ?? "";
+            string safeNom = string.Concat(nom.Where(char.IsLetterOrDigit));
+            string safePrenom = string.Concat(prenom.Where(char.IsLetterOrDigit));
+            string extension = Path.GetExtension(newcv.FileName);
+            string newFileName = $"{safeNom}_{safePrenom}{extension}";
+
+            var parentDirectory = Directory.GetParent(_env.ContentRootPath);
+            if (parentDirectory == null)
+                return;
+
+            var uploads = Path.Combine(parentDirectory.FullName, "rh.BackOffice", "wwwroot", "cvs", "Téléchargements");
+            Directory.CreateDirectory(uploads);
+
+            var filePath = Path.Combine(uploads, newFileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                newcv.CopyTo(stream);
+            }
+
+            candidat.PieceJointe = $"wwwroot/cvs/Téléchargements/{newFileName}";
+            _context.Candidat.Update(candidat);
+            _context.SaveChanges();
+        }
+
+        public IActionResult ApercuCV(string pj)
+        {
+            var pieceJointe = pj;
+            if (string.IsNullOrEmpty(pieceJointe))
+                return NotFound();
+            var parentDirectory = Directory.GetParent(_env.ContentRootPath);
+            if (parentDirectory == null)
+                return NotFound();
+
+            var filePath = Path.Combine(parentDirectory.FullName, "rh.BackOffice", "wwwroot", "cvs", "Téléchargements", Path.GetFileName(pieceJointe));
+            if (!System.IO.File.Exists(filePath))
+                return NotFound();
+
+            var contentType = "application/octet-stream";
+            var ext = Path.GetExtension(filePath).ToLowerInvariant();
+            if (ext == ".pdf") contentType = "application/pdf";
+            else if (ext == ".doc" || ext == ".docx") contentType = "application/msword";
+            else if (ext == ".jpg" || ext == ".jpeg") contentType = "image/jpeg";
+            else if (ext == ".png") contentType = "image/png";
+
+            return PhysicalFile(filePath, contentType);
         }
     }
 }

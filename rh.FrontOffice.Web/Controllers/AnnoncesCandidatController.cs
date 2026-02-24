@@ -1,32 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using rh.Domain.Entities;
 using rh.Infrastructure.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace rh.FrontOffice.Web.Controllers
 {
-    public class AnnoncesController : Controller
+    public class AnnoncesCandidatController : Controller
     {
         private readonly AppDbContext _context;
 
-        public AnnoncesController(AppDbContext context)
+        public AnnoncesCandidatController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: Annonces
+        
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.Annonces.Include(a => a.ModeTravail).Include(a => a.TypeContrat);
-            return View(await appDbContext.ToListAsync());
+            int? idcandidat = HttpContext.Session.GetInt32("UserId");
+            if (idcandidat == null)
+            {
+                return RedirectToAction("LoginBasic", "Auth");
+            }
+
+            var candidatures = await _context.Candidature
+                .Where(c => c.IdCandidat == idcandidat)
+                .Include(c => c.Annonce)
+                    .ThenInclude(a => a.TypeContrat)
+                .Include(c => c.Annonce)
+                    .ThenInclude(a => a.ModeTravail)
+                .Include(c=> c.Statut)
+                .ToListAsync();
+
+
+            ViewBag.iduser = idcandidat;
+            return View("~/Views/AnnonceCandidat/AnnonceCandidat.cshtml", candidatures);
         }
 
-        // GET: Annonces/Details/5
+        
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,7 +63,7 @@ namespace rh.FrontOffice.Web.Controllers
             return View(annonce);
         }
 
-        // GET: Annonces/Create
+        
         public IActionResult Create()
         {
             ViewData["IdModeTravail"] = new SelectList(_context.ModeTravails, "Id", "Libelle");
@@ -54,9 +71,9 @@ namespace rh.FrontOffice.Web.Controllers
             return View();
         }
 
-        // POST: Annonces/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
+        
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Libelle,Description,CompetenceRequis,IdTypeContrat,IdModeTravail,Duree,NbDossierValide,NiveauExperience,Localisation,DateFin,DateCreation")] Annonce annonce)
@@ -127,7 +144,6 @@ namespace rh.FrontOffice.Web.Controllers
             return View(annonce);
         }
 
-        // GET: Annonces/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -147,7 +163,6 @@ namespace rh.FrontOffice.Web.Controllers
             return View(annonce);
         }
 
-        // POST: Annonces/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

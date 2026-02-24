@@ -1,0 +1,86 @@
+﻿@model IEnumerable<rh.Domain.Entities.Candidature>
+@{
+    ViewData["Title"] = "Liste des Annonces postulées par le candidat";
+}
+
+<div class="container mt-4">
+    <ul class="nav nav-tabs" id="candidatureTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab">Toutes les candidatures</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab">Candidatures en attente</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="validated-tab" data-bs-toggle="tab" data-bs-target="#validated" type="button" role="tab">Candidatures validées</button>
+        </li>
+    </ul>
+    <div class="tab-content" id="candidatureTabsContent">
+        <!-- Toutes les candidatures -->
+        <div class="tab-pane fade show active" id="all" role="tabpanel">
+            <table class="table mt-3">
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Date</th>
+                        <th>Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var c in Model)
+                    {
+                        <tr>
+                            <td>@c.Annonce?.Libelle</td>
+                            <td>@c.Annonce?.DateCreation.ToString("dd/MM/yyyy")</td>
+                            <td>@c.Statut.Libelle</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- Candidatures en attente -->
+        <div class="tab-pane fade" id="pending" role="tabpanel">
+            <table class="table mt-3">
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Date</th>
+                        <th>Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var c in Model.Where(x => x.IdStatut == 1))
+                    {
+                        <tr>
+                            <td>@c.Annonce?.Libelle</td>
+                            <td>@c.Annonce?.DateCreation.ToString("dd/MM/yyyy")</td>
+                            <td>@c.Statut.Libelle</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- Candidatures validées -->
+        <div class="tab-pane fade" id="validated" role="tabpanel">
+            <table class="table mt-3">
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Date</th>
+                        <th>Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var c in Model.Where(x => x.IdStatut == 2))
+                    {
+                        <tr>
+                            <td>@c.Annonce?.Libelle</td>
+                            <td>@c.Annonce?.DateCreation.ToString("dd/MM/yyyy")</td>
+                            <td>@c.Statut.Libelle</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

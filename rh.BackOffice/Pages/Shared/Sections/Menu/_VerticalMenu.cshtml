@@ -25,17 +25,13 @@
                 <div class="text-truncate">Annonces</div>
             </a>
         </li>
-
         <!-- Candidats -->
-        @if (!string.IsNullOrEmpty(ViewBag.iduser as string))
-        {
-            <li class='menu-item@(currentPage.StartsWith("/Candidats") ? " active" : "")'>
-                <a asp-page="/Candidats/Index" class="menu-link">
-                    <i class="menu-icon icon-base bx bx-group"></i>
-                    <div class="text-truncate">Candidats</div>
-                </a>
-            </li>
-        }
+        <li class='menu-item@(currentPage.StartsWith("/Candidats") ? " active" : "")'>
+            <a asp-page="/Candidats/Index" class="menu-link">
+                <i class="menu-icon icon-base bx bx-group"></i>
+                <div class="text-truncate">Candidats</div>
+            </a>
+        </li>
     </ul>
 
 </aside>

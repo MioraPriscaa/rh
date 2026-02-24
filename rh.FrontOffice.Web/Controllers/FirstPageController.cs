@@ -25,15 +25,20 @@ namespace rh.FrontOffice.Web.Controllers
         {
             var today = DateTime.Today;
             int? idcandidat = HttpContext.Session.GetInt32("UserId");
-            var annonces = await _context.Annonces
-                .Where(a => a.DateFin == null || a.DateFin >= today)
-                .ToListAsync();
+
             if (idcandidat == null)
             {
+                var annonces = await _context.Annonces
+                    .Where(a => a.DateFin == null || a.DateFin >= today)
+                    .ToListAsync();
                 return View("~/Views/FirstPages/Index.cshtml", annonces);
             }
+            var annoncesCandidat = await _context.Annonces
+                .Where(a => (a.DateFin == null || a.DateFin >= today) &&
+                !_context.Candidature.Any(c => c.IdAnnonce == a.Id && c.IdCandidat == idcandidat))
+                .ToListAsync();
             ViewBag.iduser = idcandidat;
-            return View("~/Views/FirstPages/Index.cshtml", annonces);
+            return View("~/Views/FirstPages/Index.cshtml", annoncesCandidat);
 
         }
         [HttpGet]

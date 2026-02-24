@@ -7,24 +7,29 @@
         <div class="card-body">
             <div class="row g-0">
                 <div class="col-md p-6">
-                    <div class="form-check form-check-inline mt-4">
-                        <input class="form-check-input" type="radio" name="cv" id="cvradio" value="old" checked onclick="toggleFileInput()" />
-                        <label class="form-check-label" for="cvradio">CV actuel</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="cv" id="cvradio2" value="new" onclick="toggleFileInput()" />
-                        <label class="form-check-label" for="cvradio2">Importer un autre CV</label>
-                    </div>
+                    <form method="post" action="/Postule/create" enctype="multipart/form-data">
+                        <input type="hidden" name="idAnnonce" value="@ViewBag.IdAnnonce" />
+                        <div class="form-check form-check-inline mt-4">
+                            <input class="form-check-input" type="radio" name="cv" id="cvradio" value="old" checked onclick="toggleFileInput()" />
+                            <label class="form-check-label" for="cvradio">CV actuel</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="cv" id="cvradio2" value="new" onclick="toggleFileInput()" />
+                            <label class="form-check-label" for="cvradio2">Importer un autre CV</label>
+                        </div>
 
-                    <div class="input-group" id="oldcvaffiche" style="display: flex;">
-                        <input type="text" name="oldcv" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2" value="@ViewBag.PieceJointe" disabled/>
-                        <button class="btn btn-outline-primary" type="button" id="button-addon2">Aperçue</button>
-                    </div>
+                        <div class="input-group" id="oldcvaffiche" style="display: flex;">
+                            <input type="text" class="form-control" value="@ViewBag.PieceJointe" disabled />
+                            <a class="btn btn-outline-primary" href="@Url.Action("ApercuCV", "Postule", new { pj = ViewBag.PieceJointe })" target="_blank" id="button-addon2">Aperçue</a>
+                        </div>
 
-                    <div class="mb-4" id="fileInputDiv" style="display:none;">
-                        <label for="formFile" class="form-label">Importer un nouveau CV</label>
-                        <input class="form-control" type="file" id="formFile" name="newcv" />
-                    </div>
+                        <div class="mb-4" id="fileInputDiv" style="display:none;">
+                            <label for="formFile" class="form-label">Importer un nouveau CV</label>
+                            <input class="form-control" type="file" id="formFile" name="newcv" />
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Postuler</button>
+                    </form>
 
                     <script>
                         function toggleFileInput() {
@@ -36,10 +41,6 @@
                     </script>
                 </div>
             </div>
-            <form method="post" action="/Postule/create">
-                <input type="hidden" name="idAnnonce" value="@ViewBag.IdAnnonce" />
-                <button type="submit" class="btn btn-primary">Postuler</button>
-            </form>
         </div>
     </div>
 </div>
